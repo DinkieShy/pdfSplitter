@@ -1,7 +1,7 @@
 from PyPDF2 import PdfFileReader as Reader 
 from PyPDF2 import PdfFileWriter as Writer
 from sys import argv
-from os import path, mkdir
+from os import path, mkdir, remove
 from pdf2docx import parse
 
 assert len(argv) >= 3, "USAGE: split.py [filename] [page number]"
@@ -44,4 +44,14 @@ outputFileBefore.close()
 outputFileDesired.close()
 outputFileAfter.close()
 
+meta = open("./output/meta.txt", "w")
+meta.write(argv[1])
+meta.write("\n")
+meta.write(argv[2])
+meta.write("\n")
+meta.write(str(len(pages)))
+meta.close()
+
 parse("./output/{0}.pdf".format(desiredPage), "./output/{0}.docx".format(desiredPage))
+
+remove("./output/{0}.pdf".format(desiredPage))
