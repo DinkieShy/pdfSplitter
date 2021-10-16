@@ -2,8 +2,9 @@ from PyPDF2 import PdfFileReader as Reader
 from PyPDF2 import PdfFileWriter as Writer
 from sys import argv
 from os import path, mkdir
+from pdf2docx import parse
 
-assert len(argv) >= 3, "USAGE: main.py [filename] [page number]"
+assert len(argv) >= 3, "USAGE: split.py [filename] [page number]"
 if argv[1][-4:] != ".pdf":
 	argv[1] += ".pdf"
 assert path.isfile(argv[1]), "filename does not exist"
@@ -42,3 +43,5 @@ pdfAfter.write(outputFileAfter)
 outputFileBefore.close()
 outputFileDesired.close()
 outputFileAfter.close()
+
+parse("./output/{0}.pdf".format(desiredPage), "./output/{0}.docx".format(desiredPage))
