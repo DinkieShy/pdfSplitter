@@ -8,9 +8,8 @@ Step 3: Run `pip install -r requirements.txt` (You may wish to do this in a [vir
 
 ## Use
 Step 1: Run `python split.py` for a usage example  
-Step 2: Make changes to the docx created in the output folder  
-Step 3: Save the modified docx as a pdf (leave the filename unchanged)  
-Step 4: Run `python merge.py`  
+Step 2: Make changes to the docx created in the output folder then save/export as a pdf  
+Step 3: Run `python merge.py`  
 
 Split.py: Creates 2 pdfs and a docx: pages before (pdf), the page you want to edit (docx) and the pages after (pdf)
   - Note: the pdf of pages before or after the desired pages aren't created if the desired page is the first or last
