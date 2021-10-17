@@ -2,7 +2,6 @@ from PyPDF2 import PdfFileReader as Reader
 from PyPDF2 import PdfFileWriter as Writer
 from sys import argv
 from os import path, mkdir, remove
-from docx2pdf import convert
 
 assert path.exists("./output/meta.txt"), "meta.txt not found, make sure to use split.py first"
 
