@@ -18,10 +18,7 @@ assert not path.exists("./output/{0}".format(filename)), "file already exists in
 
 print(lines)
 
-assert path.exists("./output/{0}.docx".format(desiredPage)), "docx file not found"
-
-convert("./output/{0}.docx".format(desiredPage), "./output/{0}.pdf".format(desiredPage))
-
+assert path.exists("./output/{0}.pdf".format(desiredPage)), "pdf of desired page not found, please make sure to export as pdf once you've made changes"
 
 pdfMerged = Writer()
 
