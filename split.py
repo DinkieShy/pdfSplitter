@@ -32,17 +32,19 @@ for i in range(reader.getNumPages()):
 	else:
 		pdfDesired.addPage(pages[i])
 
-outputFileBefore = open("./output/1-{0}.pdf".format(desiredPage-1), "wb")
 outputFileDesired = open("./output/{0}.pdf".format(desiredPage), "wb")
-outputFileAfter = open("./output/{0}-{1}.pdf".format(desiredPage+1, len(pages)), "wb")
-
-pdfBefore.write(outputFileBefore)
 pdfDesired.write(outputFileDesired)
-pdfAfter.write(outputFileAfter)
-
-outputFileBefore.close()
 outputFileDesired.close()
-outputFileAfter.close()
+
+if(desiredPage != 1):
+	outputFileBefore = open("./output/1-{0}.pdf".format(desiredPage-1), "wb")
+	pdfBefore.write(outputFileBefore)
+	outputFileBefore.close()
+
+if(desiredPage < len(pages)):
+	outputFileAfter = open("./output/{0}-{1}.pdf".format(desiredPage+1, len(pages)), "wb")
+	pdfAfter.write(outputFileAfter)
+	outputFileAfter.close()
 
 meta = open("./output/meta.txt", "w")
 meta.write(argv[1])

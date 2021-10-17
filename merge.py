@@ -14,28 +14,36 @@ filename = lines[0].replace("\n", "")
 desiredPage = int(lines[1].replace("\n", ""))
 numPages = int(lines[2])
 
+assert not path.exists("./output/{0}".format(filename)), "file already exists in output"
+
 print(lines)
 
 assert path.exists("./output/{0}.docx".format(desiredPage)), "docx file not found"
 
 convert("./output/{0}.docx".format(desiredPage), "./output/{0}.pdf".format(desiredPage))
 
-pdfBefore = Reader("./output/1-{0}.pdf".format(desiredPage-1))
-pdfDesired = Reader("./output/{0}.pdf".format(desiredPage))
-pdfAfter = Reader("./output/{0}-{1}.pdf".format(desiredPage+1, numPages))
 
 pdfMerged = Writer()
 
-pdfMerged.appendPagesFromReader(pdfBefore)
+pdfBeforePath = "./output/1-{0}.pdf".format(desiredPage-1)
+if path.exists(pdfBeforePath):
+	pdfBefore = Reader(pdfBeforePath)
+	pdfMerged.appendPagesFromReader(pdfBefore)
+	remove(pdfBeforePath)
+
+pdfDesired = Reader("./output/{0}.pdf".format(desiredPage))
 pdfMerged.appendPagesFromReader(pdfDesired)
-pdfMerged.appendPagesFromReader(pdfAfter)
+
+pdfAfterPath = "./output/{0}-{1}.pdf".format(desiredPage+1, numPages)
+if path.exists(pdfAfterPath):
+	pdfAfter = Reader(pdfAfterPath)
+	pdfMerged.appendPagesFromReader(pdfAfter)
+	remove(pdfAfterPath)
 
 pdfMergedWriter = open("./output/{0}".format(filename), "wb")
 pdfMerged.write(pdfMergedWriter)
 pdfMergedWriter.close()
 
-remove("./output/1-{0}.pdf".format(desiredPage-1))
 remove("./output/{0}.pdf".format(desiredPage))
-remove("./output/{0}-{1}.pdf".format(desiredPage+1, numPages))
 remove("./output/{0}.docx".format(desiredPage))
 remove("./output/meta.txt")
